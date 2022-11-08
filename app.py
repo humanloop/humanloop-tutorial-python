@@ -7,9 +7,6 @@ import openai
 import humanloop as hl
 from flask import Flask, redirect, render_template, request, url_for
 
-from utils import generate_prompt_from_template
-
-
 app = Flask(__name__)
 
 hl.init(
