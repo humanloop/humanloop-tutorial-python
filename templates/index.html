@@ -29,7 +29,7 @@
     <div class="result" style="width: 500px" id="result">{{ result }}</div>
     <form
       class="submit-form"
-      action="/actions/copy?log_id={{ log_id }}&result={{ result }}&feedback={{ feedback }}"
+      action="/actions/copy?data_id={{ data_id }}&result={{ result }}&feedback={{ feedback }}"
       method="post"
     >
       <button
@@ -44,7 +44,7 @@
   </div>
   <div class="feedback">
     <form
-      action="/actions/thumbs-up?log_id={{ log_id }}&result={{ result }}&copied={{ copied }}"
+      action="/actions/thumbs-up?data_id={{ data_id }}&result={{ result }}&copied={{ copied }}"
       method="post"
     >
       <button type="submit" class="hover {{ 'submitted' if feedback == '👍' }}">
@@ -52,7 +52,7 @@
       </button>
     </form>
     <form
-      action="/actions/thumbs-down?log_id={{ log_id }}&result={{ result }}&copied={{ copied }}"
+      action="/actions/thumbs-down?data_id={{ data_id }}&result={{ result }}&copied={{ copied }}"
       method="post"
     >
       <button type="submit" class="hover {{ 'submitted' if feedback == '👎' }}">

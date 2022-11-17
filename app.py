@@ -1,9 +1,5 @@
 import os
-import textwrap
-import os
-from uuid import uuid4
 
-import openai
 import humanloop as hl
 from flask import Flask, redirect, render_template, request, url_for
 
@@ -36,6 +32,7 @@ def get_question():
         project="LearnAnythingFromAnyone", inputs={"expert": expert, "topic": topic}
     )
     data_id = generation.data[0].id
+    print("Data_id from generation: ", data_id)
     result = generation.data[0].output
 
     return redirect(url_for("index", result=result, data_id=data_id))
@@ -44,6 +41,7 @@ def get_question():
 @app.route("/actions/thumbs-up", methods=["POST"])
 def thumbs_up():
     data_id = request.args.get("data_id")
+    print(data_id)
 
     # Send explicit feedback 👍 to Humanloop
     hl.feedback(group="feedback", label="👍", data_id=data_id)
