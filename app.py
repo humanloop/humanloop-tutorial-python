@@ -28,23 +28,25 @@ def get_question():
     expert = request.form["Expert"]
     topic = request.form["Topic"]
 
+    # hl.generate automatically logs the data to your project.
     generation = hl.generate(
-        project="learn-anything", inputs={"expert": expert, "topic": topic}
+        project="learn-anything", 
+        inputs={"expert": expert, "topic": topic},
     )
     data_id = generation.data[0].id
-    print("data_id from generation: ", data_id)
     result = generation.data[0].output
 
+    print("data_id from generation: ", data_id)
     return redirect(url_for("index", result=result, data_id=data_id))
 
 
 @app.route("/actions/thumbs-up", methods=["POST"])
 def thumbs_up():
     data_id = request.args.get("data_id")
-    print(data_id)
 
     # Send rating feedback to Humanloop
     hl.feedback(type="rating", value="good", data_id=data_id)
+    print(f"Recorded 👍 feedback to datapoint: {data_id}")
 
     return redirect(
         url_for(
@@ -82,6 +84,7 @@ def feedback():
 
     # Send implicit feedback to Humanloop
     hl.feedback(type="action", value="copy", data_id=data_id)
+    print(f"Recorded implicit feedback that user copied to datapoint: {data_id}")
 
     return redirect(
         url_for(
