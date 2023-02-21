@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 hl.init(
     api_key=os.getenv("HUMANLOOP_API_KEY"),
-    provider_api_keys={"OpenAI": os.getenv("OPENAI_API_KEY")},
+    provider_api_keys={"openai": os.getenv("OPENAI_API_KEY")},
 )
 
 
@@ -28,23 +28,25 @@ def get_question():
     expert = request.form["Expert"]
     topic = request.form["Topic"]
 
+    # hl.generate automatically logs the data to your project.
     generation = hl.generate(
-        project="LearnAnythingFromAnyone", inputs={"expert": expert, "topic": topic}
+        project="learn-anything", 
+        inputs={"expert": expert, "topic": topic},
     )
     data_id = generation.data[0].id
-    print("Data_id from generation: ", data_id)
     result = generation.data[0].output
 
+    print("data_id from generation: ", data_id)
     return redirect(url_for("index", result=result, data_id=data_id))
 
 
 @app.route("/actions/thumbs-up", methods=["POST"])
 def thumbs_up():
     data_id = request.args.get("data_id")
-    print(data_id)
 
-    # Send explicit feedback 👍 to Humanloop
-    hl.feedback(group="feedback", label="👍", data_id=data_id)
+    # Send rating feedback to Humanloop
+    hl.feedback(type="rating", value="good", data_id=data_id)
+    print(f"Recorded 👍 feedback to datapoint: {data_id}")
 
     return redirect(
         url_for(
@@ -61,9 +63,9 @@ def thumbs_up():
 def thumbs_down():
     data_id = request.args.get("data_id")
 
-    # Send explicit feedback 👎 to Humanloop
-    hl.feedback(group="feedback", label="👎", data_id=data_id)
-    print(f"Recorded 👎 feedback to data point: {data_id}")
+    # Send rating feedback to Humanloop
+    hl.feedback(type="rating", value="bad", data_id=data_id)
+    print(f"Recorded 👎 feedback to datapoint: {data_id}")
 
     return redirect(
         url_for(
@@ -81,7 +83,8 @@ def feedback():
     data_id = request.args.get("data_id")
 
     # Send implicit feedback to Humanloop
-    hl.feedback(group="implicit", label="copy", data_id=data_id)
+    hl.feedback(type="action", value="copy", data_id=data_id)
+    print(f"Recorded implicit feedback that user copied to datapoint: {data_id}")
 
     return redirect(
         url_for(
