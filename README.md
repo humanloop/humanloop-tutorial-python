@@ -11,7 +11,7 @@ This is an example app that shows you how to use the Humanloop API in a GPT-3 ap
 3. Navigate into the project directory
 
    ```bash
-   $ cd openai-tutorial-python
+   $ cd humanloop-tutorial-python
    ```
 
 4. Create a new virtual environment
