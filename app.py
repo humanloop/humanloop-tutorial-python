@@ -1,13 +1,15 @@
 import os
 
-import humanloop as hl
+from humanloop import Humanloop
 from flask import Flask, redirect, render_template, request, url_for
 
 app = Flask(__name__)
 
-hl.init(
-    api_key=os.getenv("HUMANLOOP_API_KEY"),
-    provider_api_keys={"openai": os.getenv("OPENAI_API_KEY")},
+HUMANLOOP_API_KEY = os.getenv("HUMANLOOP_API_KEY")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+humanloop = Humanloop(
+    api_key=HUMANLOOP_API_KEY,
 )
 
 
@@ -28,15 +30,16 @@ def get_question():
     expert = request.form["Expert"]
     topic = request.form["Topic"]
 
-    # hl.generate automatically logs the data to your project.
-    generation = hl.generate(
+    # hl.complete automatically logs the data to your project.
+    complete_response = humanloop.complete_deployed(
         project="learn-anything", 
         inputs={"expert": expert, "topic": topic},
+        provider_api_keys={"openai": OPENAI_API_KEY}
     )
-    data_id = generation.data[0].id
-    result = generation.data[0].output
+    data_id = complete_response.body["data"][0]["id"]
+    result = complete_response.body["data"][0]["output"]
 
-    print("data_id from generation: ", data_id)
+    print("data_id from completion: ", data_id)
     return redirect(url_for("index", result=result, data_id=data_id))
 
 
@@ -45,7 +48,7 @@ def thumbs_up():
     data_id = request.args.get("data_id")
 
     # Send rating feedback to Humanloop
-    hl.feedback(type="rating", value="good", data_id=data_id)
+    humanloop.feedback(type="rating", value="good", data_id=data_id)
     print(f"Recorded 👍 feedback to datapoint: {data_id}")
 
     return redirect(
@@ -64,7 +67,7 @@ def thumbs_down():
     data_id = request.args.get("data_id")
 
     # Send rating feedback to Humanloop
-    hl.feedback(type="rating", value="bad", data_id=data_id)
+    humanloop.feedback(type="rating", value="bad", data_id=data_id)
     print(f"Recorded 👎 feedback to datapoint: {data_id}")
 
     return redirect(
@@ -83,7 +86,7 @@ def feedback():
     data_id = request.args.get("data_id")
 
     # Send implicit feedback to Humanloop
-    hl.feedback(type="action", value="copy", data_id=data_id)
+    humanloop.feedback(type="action", value="copy", data_id=data_id)
     print(f"Recorded implicit feedback that user copied to datapoint: {data_id}")
 
     return redirect(
