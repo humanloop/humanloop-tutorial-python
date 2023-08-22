@@ -1,4 +1,4 @@
-Flask==2.3.2
-humanloop==0.4.0a4
-openai==0.27.6
+Flask==2.3.3
+humanloop==0.5.6
+openai==0.27.8
 python-dotenv==1.0.0
