@@ -32,9 +32,9 @@ def get_question():
 
     # hl.complete automatically logs the data to your project.
     complete_response = humanloop.complete_deployed(
-        project="learn-anything", 
+        project="learn-anything",
         inputs={"expert": expert, "topic": topic},
-        provider_api_keys={"openai": OPENAI_API_KEY}
+        provider_api_keys={"openai": OPENAI_API_KEY},
     )
     data_id = complete_response.body["data"][0]["id"]
     result = complete_response.body["data"][0]["output"]
