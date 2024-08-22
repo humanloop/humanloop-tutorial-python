@@ -1,6 +1,6 @@
 import os
 
-from humanloop import Humanloop, ProviderApiKeysParams
+from humanloop import Humanloop
 from flask import Flask, redirect, render_template, request, url_for
 from dotenv import load_dotenv
 
@@ -44,7 +44,7 @@ def get_question():
         #     ],
         #     "model": "gpt-4",
         # },
-        provider_api_keys=ProviderApiKeysParams(openai=OPENAI_API_KEY),
+        provider_api_keys={"openai": OPENAI_API_KEY},
     )
 
     # The log_id is the ID of the log on Humanloop that was created by the call
