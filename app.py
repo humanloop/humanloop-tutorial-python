@@ -34,15 +34,16 @@ def get_question():
     call_response = hl.prompts.call(
         path="learn-anything",
         inputs={"expert": expert, "topic": topic},
-        prompt={
-            "template": [
-                {
-                    "role": "system",
-                    "content": "You are {{expert}}. Write a joke about {{topic}}.",
-                }
-            ],
-            "model": "gpt-4",
-        },
+        # If you havent previously created a prompt, you can uncomment the prompt template below
+        # prompt={
+        #     "template": [
+        #         {
+        #             "role": "system",
+        #             "content": "You are {{expert}}. Write a joke about {{topic}}.",
+        #         }
+        #     ],
+        #     "model": "gpt-4",
+        # },
         provider_api_keys=ProviderApiKeysParams(openai=OPENAI_API_KEY),
     )
 
