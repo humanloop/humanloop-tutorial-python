@@ -1,6 +1,6 @@
 # Humanloop API Quickstart - Python example app
 
-This is an example app that shows you how to use the Humanloop API in a GPT-3 app. It uses the [Flask](https://flask.palletsprojects.com/en/2.2.x/) web framework and [Humanloop](https://humanloop.com) for data logging and model improvement. Check out the tutorial or follow the instructions below to get set up.
+This is an example app that shows you how to use the Humanloop API in a GPT-4 app. It uses the [Flask](https://flask.palletsprojects.com/en/2.3.x/) web framework and [Humanloop](https://humanloop.com) for data logging and model improvement. Check out the tutorial or follow the instructions below to get set up.
 
 ## Setup
 
@@ -30,10 +30,10 @@ This is an example app that shows you how to use the Humanloop API in a GPT-3 ap
 6. Make a copy of the example environment variables file
 
    ```bash
-   $ cp .env.example .env
+   $ cp .example.env .env
    ```
 
-7. Add your [OpenAI API key](https://beta.openai.com/account/api-keys) and [Humanloop API key](https://app.humanloop.com/llama/settings) to the newly created `.env` file
+7. Add your [OpenAI API key](https://platform.openai.com/api-keys) and [Humanloop API key](https://app.humanloop.com/account/api-keys) to the newly created `.env` file
 
 8. Run the app
 
@@ -41,4 +41,4 @@ This is an example app that shows you how to use the Humanloop API in a GPT-3 ap
    $ flask --debug run
    ```
 
-You should now be able to access the app at [http://localhost:5000](http://localhost:5000)! For the full context behind this example app, check out the [tutorial](https://beta.openai.com/docs/quickstart).
+You should now be able to access the app at [http://localhost:5000](http://localhost:5000)! For the full context behind this example app, check out the [tutorial](https://platform.openai.com/docs/quickstart).

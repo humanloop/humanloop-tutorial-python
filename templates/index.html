@@ -6,56 +6,47 @@
     href="{{ url_for('static', filename='learning.png') }}"
   />
   <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
-  <script>
-    function copyToClipboard() {
-      const element = document.getElementById("result");
-      navigator.clipboard.writeText(element.textContent);
-    }
-  </script>
 </head>
 
 <body class="column">
   <a href="/" class="column">
-    <img src="{{ url_for('static', filename='learning.png') }}"  width=100 />
+    <img src="{{ url_for('static', filename='learning.png') }}" width="100" />
     <h3>Learn anything from anyone</h3>
   </a>
   <form class="input-form" action="/get-question" method="post">
-    <input type="text" name="Expert" placeholder="Enter the name of an expert" required />
+    <input
+      type="text"
+      name="Expert"
+      placeholder="Enter the name of an expert"
+      required
+    />
     <input type="text" name="Topic" placeholder="Enter a topic" required />
     <input type="submit" class="hover" value="Teach me!" />
   </form>
   {% if result %}
   <div class="result-wrapper">
     <div class="result" style="width: 500px" id="result">{{ result }}</div>
+  </div>
+  <div class="evaluation">
     <form
-      class="submit-form"
-      action="/actions/copy?data_id={{ data_id }}&result={{ result }}&feedback={{ feedback }}"
+      action="/actions/thumbs-up?log_id={{ log_id }}&result={{ result }}"
       method="post"
     >
       <button
         type="submit"
-        class="copy hover {{ 'submitted' if copied == 'True' }}"
-        title="Copy to clipboard"
-        onclick="copyToClipboard()"
+        class="hover {{ 'submitted' if evaluation == '👍' }}"
       >
-        📋
-      </button>
-    </form>
-  </div>
-  <div class="feedback">
-    <form
-      action="/actions/thumbs-up?data_id={{ data_id }}&result={{ result }}&copied={{ copied }}"
-      method="post"
-    >
-      <button type="submit" class="hover {{ 'submitted' if feedback == '👍' }}">
         👍
       </button>
     </form>
     <form
-      action="/actions/thumbs-down?data_id={{ data_id }}&result={{ result }}&copied={{ copied }}"
+      action="/actions/thumbs-down?log_id={{ log_id }}&result={{ result }}"
       method="post"
     >
-      <button type="submit" class="hover {{ 'submitted' if feedback == '👎' }}">
+      <button
+        type="submit"
+        class="hover {{ 'submitted' if evaluation == '👎' }}"
+      >
         👎
       </button>
     </form>
